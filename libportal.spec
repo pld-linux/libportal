@@ -5,15 +5,15 @@
 Summary:	Flatpak portal library
 Summary(pl.UTF-8):	Biblioteka portali Flatpaka
 Name:		libportal
-Version:	0.3
+Version:	0.4
 Release:	1
 License:	LGPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/flatpak/libportal/releases
 Source0:	https://github.com/flatpak/libportal/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	dffd58a937dfbabc873e51029dc587f3
+# Source0-md5:	2ca3806e18e2197dd87d22379405a624
 URL:		https://github.com/flatpak/libportal
-BuildRequires:	glib2-devel >= 1:2.0
+BuildRequires:	glib2-devel >= 1:2.58
 BuildRequires:	gtk-doc
 BuildRequires:	meson >= 0.46.0
 BuildRequires:	ninja >= 1.5
@@ -21,6 +21,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
+Requires:	glib2 >= 1:2.58
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -35,6 +36,7 @@ Summary:	Header files for libportal library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libportal
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.58
 
 %description devel
 Header files for libportal library.
