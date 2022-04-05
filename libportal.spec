@@ -265,6 +265,15 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	gtk3 -p /sbin/ldconfig
+%postun	gtk3 -p /sbin/ldconfig
+
+%post	gtk4 -p /sbin/ldconfig
+%postun	gtk4 -p /sbin/ldconfig
+
+%post	qt5 -p /sbin/ldconfig
+%postun	qt5 -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc NEWS README.md
