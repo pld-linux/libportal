@@ -245,7 +245,7 @@ Dokumentacja API biblioteki libportal.
 %build
 %meson build \
 	%{!?with_static_libs:--default-library=shared} \
-	-Dbackends=%{?with_gtk3:gtk3%{?with_gtk4:,}}%{?with_gtk4:gtk4}%{?with_qt5:%{?with_gtk4:,}qt5}
+	-Dbackends=%{?with_gtk3:gtk3%{?with_gtk4:,}}%{?with_gtk4:gtk4}%{?with_qt5:%{?with_gtk4:,}qt5} \
 	%{!?with_apidocs:-Ddocs=false}
 
 %ninja_build -C build
