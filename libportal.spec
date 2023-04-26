@@ -26,6 +26,7 @@ BuildRequires:	Qt5X11Extras-devel >= 5
 %endif
 %{?with_apidocs:BuildRequires:	gi-docgen}
 BuildRequires:	glib2-devel >= 1:2.58
+BuildRequires:	gobject-introspection-devel
 %{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.0}
 %{?with_gtk4:BuildRequires:	gtk4-devel >= 4}
 %{?with_qt5:BuildRequires:	libstdc++-devel >= 6:4.7}
