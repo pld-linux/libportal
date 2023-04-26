@@ -20,6 +20,7 @@ URL:		https://github.com/flatpak/libportal
 %if %{with qt5}
 BuildRequires:	Qt5Core-devel >= 5
 BuildRequires:	Qt5Gui-devel >= 5
+BuildRequires:	Qt5Test-devel >= 5
 BuildRequires:	Qt5Widgets-devel >= 5
 BuildRequires:	Qt5X11Extras-devel >= 5
 %endif
