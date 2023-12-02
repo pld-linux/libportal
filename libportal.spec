@@ -36,6 +36,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.029
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	vala
 BuildRequires:	xz
 Requires:	glib2 >= 1:2.58
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
