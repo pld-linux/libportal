@@ -9,13 +9,13 @@
 Summary:	Flatpak portal library
 Summary(pl.UTF-8):	Biblioteka portali Flatpaka
 Name:		libportal
-Version:	0.6
+Version:	0.7.1
 Release:	1
 License:	LGPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/flatpak/libportal/releases
 Source0:	https://github.com/flatpak/libportal/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	e16c8ca2621aff64774a1d2ad6a2a346
+# Source0-md5:	f94be41e8495ae7d6aaed046481daa61
 URL:		https://github.com/flatpak/libportal
 %if %{with qt5}
 BuildRequires:	Qt5Core-devel >= 5
@@ -247,7 +247,9 @@ Dokumentacja API biblioteki libportal.
 %build
 %meson build \
 	%{!?with_static_libs:--default-library=shared} \
-	-Dbackends=%(echo %{?with_gtk3:gtk3 }%{?with_gtk4:gtk4 }%{?with_qt5:qt5 } | tr ' ' ',') \
+	-Dbackend-gtk3=%{__enabled_disabled gtk3} \
+	-Dbackend-gtk4=%{__enabled_disabled gtk4} \
+	-Dbackend-qt5=%{__enabled_disabled qt5} \
 	%{!?with_apidocs:-Ddocs=false}
 
 %ninja_build -C build
