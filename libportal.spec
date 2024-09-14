@@ -5,17 +5,18 @@
 %bcond_without	gtk3		# GTK+ 3 backend
 %bcond_without	gtk4		# GTK 4 backend
 %bcond_without	qt5		# Qt 5 backend
+%bcond_without	qt6		# Qt 6 backend
 #
 Summary:	Flatpak portal library
 Summary(pl.UTF-8):	Biblioteka portali Flatpaka
 Name:		libportal
-Version:	0.7.1
+Version:	0.8.1
 Release:	1
 License:	LGPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/flatpak/libportal/releases
 Source0:	https://github.com/flatpak/libportal/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	f94be41e8495ae7d6aaed046481daa61
+# Source0-md5:	3226036adea29ce152d9ca0be5ab0486
 URL:		https://github.com/flatpak/libportal
 %if %{with qt5}
 BuildRequires:	Qt5Core-devel >= 5
@@ -24,13 +25,20 @@ BuildRequires:	Qt5Test-devel >= 5
 BuildRequires:	Qt5Widgets-devel >= 5
 BuildRequires:	Qt5X11Extras-devel >= 5
 %endif
-%{?with_apidocs:BuildRequires:	gi-docgen}
+%if %{with qt6}
+BuildRequires:	Qt6Core-devel >= 6
+BuildRequires:	Qt6Gui-devel >= 6
+BuildRequires:	Qt6Test-devel >= 6
+BuildRequires:	Qt6Widgets-devel >= 6
+%endif
+%{?with_apidocs:BuildRequires:	gi-docgen >= 2021.1}
 BuildRequires:	glib2-devel >= 1:2.58
 BuildRequires:	gobject-introspection-devel
 %{?with_gtk3:BuildRequires:	gtk+3-devel >= 3.0}
 %{?with_gtk4:BuildRequires:	gtk4-devel >= 4}
 %{?with_qt5:BuildRequires:	libstdc++-devel >= 6:4.7}
-BuildRequires:	meson >= 0.49.0
+%{?with_qt6:BuildRequires:	libstdc++-devel >= 6:7}
+BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
@@ -229,6 +237,46 @@ Static libportal-qt5 library.
 %description qt5-static -l pl.UTF-8
 Statyczna biblioteka libportal-qt5.
 
+%package qt6
+Summary:	Portal API wrappers (Qt6)
+Summary(pl.UTF-8):	Obudowanie API Portal (Qt6)
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description qt6
+Portal API wrappers (Qt6).
+
+%description qt6 -l pl.UTF-8
+Obudowanie API Portal (Qt6).
+
+%package qt6-devel
+Summary:	Header file for libportal-qt6 library
+Summary(pl.UTF-8):	Plik nagłówkowy biblioteki libportal-qt6
+Group:		Development/Libraries
+Requires:	Qt6Core-devel >= 6
+Requires:	Qt6Gui-devel >= 6
+Requires:	Qt6Widgets-devel >= 6
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-qt6 = %{version}-%{release}
+
+%description qt6-devel
+Header file for libportal-qt6 library.
+
+%description qt6-devel -l pl.UTF-8
+Plik nagłówkowy biblioteki libportal-qt6.
+
+%package qt6-static
+Summary:	Static libportal-qt6 library
+Summary(pl.UTF-8):	Statyczna biblioteka libportal-qt6
+Group:		Development/Libraries
+Requires:	%{name}-qt6-devel = %{version}-%{release}
+
+%description qt6-static
+Static libportal-qt6 library.
+
+%description qt6-static -l pl.UTF-8
+Statyczna biblioteka libportal-qt6.
+
 %package apidocs
 Summary:	API documentation for libportal library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libportal
@@ -250,6 +298,7 @@ Dokumentacja API biblioteki libportal.
 	-Dbackend-gtk3=%{__enabled_disabled gtk3} \
 	-Dbackend-gtk4=%{__enabled_disabled gtk4} \
 	-Dbackend-qt5=%{__enabled_disabled qt5} \
+	-Dbackend-qt6=%{__enabled_disabled qt6} \
 	%{!?with_apidocs:-Ddocs=false}
 
 %ninja_build -C build
@@ -372,6 +421,25 @@ rm -rf $RPM_BUILD_ROOT
 %files qt5-static
 %defattr(644,root,root,755)
 %{_libdir}/libportal-qt5.a
+%endif
+%endif
+
+%if %{with qt6}
+%files qt6
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libportal-qt6.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libportal-qt6.so.1
+
+%files qt6-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libportal-qt6.so
+%{_includedir}/libportal-qt6
+%{_pkgconfigdir}/libportal-qt6.pc
+
+%if %{with static_libs}
+%files qt6-static
+%defattr(644,root,root,755)
+%{_libdir}/libportal-qt6.a
 %endif
 %endif
 
