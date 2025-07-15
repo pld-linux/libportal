@@ -293,7 +293,7 @@ Dokumentacja API biblioteki libportal.
 %setup -q
 
 %build
-%meson build \
+%meson \
 	%{!?with_static_libs:--default-library=shared} \
 	-Dbackend-gtk3=%{__enabled_disabled gtk3} \
 	-Dbackend-gtk4=%{__enabled_disabled gtk4} \
@@ -301,12 +301,12 @@ Dokumentacja API biblioteki libportal.
 	-Dbackend-qt6=%{__enabled_disabled qt6} \
 	%{!?with_apidocs:-Ddocs=false}
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %if %{with apidocs}
 install -d $RPM_BUILD_ROOT%{_gidocdir}
